@@ -4,7 +4,8 @@ FROM python:3.9-slim
 # Installa i locali italiani
 RUN apt-get update && apt-get install -y locales && \
     echo "it_IT.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen it_IT.UTF-8
+    locale-gen && \
+    update-locale LANG=it_IT.UTF-8
 
 # Imposta la directory di lavoro all'interno del container
 WORKDIR /app
