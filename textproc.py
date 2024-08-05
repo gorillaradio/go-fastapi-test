@@ -22,4 +22,4 @@ def most_frequent_words(text, n=10):
 
 # Funzione per trasformare un array in JSON
 def array_to_json(array):
-    return json.dumps(array)
+    return json.dumps(array, ensure_ascii=False)
