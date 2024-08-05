@@ -1,17 +1,11 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
 from datetime import datetime
+import locale
 
 app = FastAPI()
 
-# Configura il CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Permette tutte le origini
-    allow_credentials=True,
-    allow_methods=["*"],  # Permette tutti i metodi
-    allow_headers=["*"],  # Permette tutti gli headers
-)
+# Imposta la localizzazione in italiano
+locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
 
 @app.get("/")
 def read_root():
@@ -20,3 +14,14 @@ def read_root():
 @app.get("/new-endpoint/{value}")
 def new_endpoint(value: str):
     return {"message": f"You passed the value: {value}"}
+
+@app.get("/convert-date/{date_str}")
+def convert_date(date_str: str):
+    try:
+        # Parla la data dal formato dd-mm-yyyy
+        date_obj = datetime.strptime(date_str, "%d-%m-%Y")
+        # Converti la data in una stringa formattata
+        formatted_date = date_obj.strftime("Oggi è il %d %B %Y")
+        return {"message": formatted_date}
+    except ValueError:
+        return {"error": "Formato data non valido. Usa il formato dd-mm-yyyy."}
