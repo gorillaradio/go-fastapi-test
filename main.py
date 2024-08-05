@@ -16,3 +16,7 @@ app.add_middleware(
 @app.get("/")
 def read_root():
     return {"message": "Hello World"}
+
+@app.get("/new-endpoint/{value}")
+def new_endpoint(value: str):
+    return {"message": f"You passed the value: {value}"}
