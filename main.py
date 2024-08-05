@@ -1,8 +1,25 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from textproc import remove_stopwords, most_frequent_words, array_to_json
 
 app = FastAPI()
+
+# Configura CORS
+origins = [
+    "*",  # Permette tutte le origini
+    # Puoi specificare le origini consentite
+    # "http://localhost",
+    # "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TextRequest(BaseModel):
     text: str
