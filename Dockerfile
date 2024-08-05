@@ -1,6 +1,11 @@
 # Usa l'immagine base di Python
 FROM python:3.9-slim
 
+# Installa i locali
+RUN apt-get update && apt-get install -y locales && \
+    sed -i -e 's/# it_IT.UTF-8 UTF-8/it_IT.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+
 # Imposta la directory di lavoro all'interno del container
 WORKDIR /app
 
