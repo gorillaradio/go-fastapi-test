@@ -1,7 +1,19 @@
+import logging
+import locale
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
-import locale
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+logger.info("Starting application")
+
+try:
+    locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
+    logger.info("Locale set to it_IT.UTF-8")
+except locale.Error as e:
+    logger.error(f"Locale setting failed: {e}")
 
 app = FastAPI()
 
@@ -13,7 +25,6 @@ app.add_middleware(
     allow_methods=["*"],  # Permette tutti i metodi
     allow_headers=["*"],  # Permette tutti gli headers
 )
-
 
 # Imposta la localizzazione italiana per i nomi dei mesi
 locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
