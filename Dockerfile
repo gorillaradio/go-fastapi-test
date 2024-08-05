@@ -8,6 +8,9 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Scarica le risorse necessarie di NLTK
+RUN python -m nltk.downloader stopwords
+
 # Copia tutto il contenuto della directory corrente nella directory di lavoro del container
 COPY . /app
 
